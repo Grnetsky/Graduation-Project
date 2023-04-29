@@ -13,7 +13,9 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+				
 			}
 		},{
             "path" : "pages/control/control",
@@ -26,6 +28,15 @@
         }
         ,{
             "path" : "pages/gly/gly",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/detail/detail",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",

@@ -1,7 +1,7 @@
+import {BASEURL} from './baseip.js'
 export default async (myurl,httptype,userdata)=>{
-	var BASEURL = "http://192.168.1.104:8008/"
 	return new Promise((resolve,reject)=>{
-		
+		console.log("发送请求",BASEURL)
 		uni.showLoading({
 			title:"加载中"
 		})
@@ -10,9 +10,6 @@ export default async (myurl,httptype,userdata)=>{
 			key:'token',
 			success(data){
 				token = data.data || ''
-			},
-			fail() {
-				console.log('没有jwt')
 			},
 			complete() {
 				uni.request({
@@ -40,17 +37,10 @@ export default async (myurl,httptype,userdata)=>{
 					},
 					complete(){
 						uni.hideLoading()
+						uni.stopPullDownRefresh();
 						
-						// uni.hideToast()
-						// uni.hideToast()
+						
 					},
-					// timeout(){
-					// 	uni.showToast({
-							
-					// 		title:"请求失败",
-					// 		mask:true,
-					// 	})
-					// }
 				})
 			}
 		})

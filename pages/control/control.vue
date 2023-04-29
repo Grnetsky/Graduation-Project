@@ -81,15 +81,34 @@
 		},
 		onLoad(data) {
 			console.log(data);
+			// 连接websocket服务
 			this.socketTsk = uni.connectSocket({
-				url:"ws://192.168.1.104:8008/room/we/",
+				url:`ws://192.168.1.105:8008/room/${data.id}/dev`,
 				header: {
 						'content-type': 'application/json'
 					},
-				protocols: ['protocol1'],
+				protocols:['protocol1'],
 				method: 'GET',
+				data(){
+					return {
+						devType:1
+						}
+					},
 				success() {
 					console.log("websocket链接成功")
+				}
+			})
+			
+			this.socketTsk.onMessage((data)=>{
+				console.log("收到服务端的推送",data);
+				if(data.data == "小车已经离线"){
+					uni.showToast({
+						title:data.data,
+						icon:"error",
+						duration:2000
+					})
+					setTimeout(uni.navigateBack,2000)
+					
 				}
 			})
 		}
