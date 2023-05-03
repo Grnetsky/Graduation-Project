@@ -1,39 +1,89 @@
 <template>
-	<view>
+	<view class="root">
 		<view>
+			<!-- <view class="_system_status_bar"></view> -->
 			<!-- 提示信息弹窗 -->
-			<h1 class="title">设备编号{{carInfo.id}}</h1>
-			
+			<!-- <h1 class="title">设备编号{{carInfo.id}}</h1> -->
+			<uni-nav-bar :left-text="'编号：'+carInfo.id" color="white" statusBar :background-color="!mode?manualColor:autoColor" :title="(mode?'自动':'手动')+'巡检中'"></uni-nav-bar>
+
 			<uni-popup class="popup" ref="message" type="message">
 				<uni-popup-message :type="msgType" :message="messageText" :duration="2000"></uni-popup-message>
 			</uni-popup>
 		</view>
 		
 		<!-- {{mode? '手动':'自动'}}控制中... -->
-		<video src=""></video>
-		<view class="controller">
-			<view v-if="mode" class="direction">
-				<view class="top">
-					<view class="button" @touchstart="forward(true)" @touchend="forward(false)">
-						<button type="default">↑</button>
+		<video autoplay muted loop src="" title="实时画面" :is-live="true"></video>
+		<view class="video_botton" :style="{'--bgc':mode?autoColor:manualColor}">
+			<view class="video_botton_item">
+				<h2>86</h2>
+				剩余电量
+			</view>
+			<view class="video_botton_item">
+				<h2>30cm/s</h2>
+				
+				前进速度
+			</view>
+			<view class="video_botton_item">
+				<h2>6</h2>
+				
+				标记点数
+			</view>
+			<view class="video_botton_item">
+				<h2>G2</h2>
+				
+				当前位置
+			</view>
+		</view>
+		<view class="funcs">
+			<view class="controller" :style="{'--bgc':mode?autoColor:manualColor}">
+				<view class="direction">
+					<view class="top">
+						<view class="button" @touchstart="forward(true)" @touchend="forward(false)">
+							<uni-icons type="top" size="40" color="#fff"></uni-icons>
+						</view>
+					</view>
+					<view class="lr">
+						<view class="button" @touchstart="left(true)" @touchend="left(false)">
+							<uni-icons type="left" size="40" color="#fff"></uni-icons>
+						</view>
+						<view class="button" @touchstart="right(true)" @touchend="right(false)">
+							<uni-icons type="right" size="40" color="#fff"></uni-icons>
+							
+						</view>
+					</view>
+					<view class="bom">
+						<view class="button" @touchstart="back(true)" @touchend="back(false)">
+							<uni-icons type="bottom" size="40" color="#fff"></uni-icons>
+						</view>
 					</view>
 				</view>
-				<view class="lr">
-					<view class="button" @touchstart="left(true)" @touchend="left(false)">
-						<button type="default">←</button>
-					</view>
-					<view class="button" @touchstart="right(true)" @touchend="right(false)">
-						<button type="default">→</button>
-					</view>
+				<switch class="switch" :checked="mode" @change="mode=!mode" />
+				
+			</view>
+			<view class="boxs">
+				<view class="box" :style="{'--bgc':mode?autoColor:manualColor}">
+					
+				<text class="box_title">速度</text>
+				 <view class="speedText">
+				 	{{speed}}
+				 </view>
+							<view style="touch-action: none;">
+								<slider block-size="16" :value="speed" @change="sliderChange"/>
+							</view>
 				</view>
-				<view class="bom">
-					<view class="button" @touchstart="back(true)" @touchend="back(false)">
-						<button type="default">↓</button>
-					</view>
+				<view class="box" :style="{'--bgc':mode?autoColor:manualColor}">
+				
+				</view>
+				<view class="box" :style="{'--bgc':mode?autoColor:manualColor}">
+					
+				</view>
+				<view class="box" :style="{'--bgc':mode?autoColor:manualColor}">
+					
 				</view>
 			</view>
-			<button type="primary" @click="mode=!mode">切换模式</button>
 		</view>
+		
+		
 	</view>
 </template>
 
@@ -41,14 +91,22 @@
 	export default {
 		data() {
 			return {
-				mode:true,
+				mode:false,
 				socketTsk:null,
 				msgType:"",
 				messageText:"",
-				carInfo:{}
+				carInfo:{},
+				autoColor:'#12c155',
+				manualColor:"#39b3ff",
+				speed:0
+				
 			}
 		},
 		methods: {
+			// 速度修改
+			sliderChange(e){
+				this.speed = e.detail.value
+			},
 			messageToggle(type,message) {
 				this.msgType = type
 				this.messageText =message
@@ -105,6 +163,7 @@
 		},
 		onLoad(data) {
 			console.log(data);
+			this.mode = data.mode=="auto"?true:false
 			this.carInfo = data
 			// 连接websocket服务
 			
@@ -125,7 +184,7 @@
 					this.messageToggle('success','设备连接成功')
 				}
 			})
-			
+	
 			this.socketTsk.onMessage((data)=>{
 				console.log("收到服务端的推送",data);
 				if(data.data == "小车已经离线"){
@@ -135,7 +194,7 @@
 						duration:2000
 					})
 					this.socketTsk.close()
-					setTimeout(uni.navigateBack,2000)
+					setTimeout(uni.navigateBack,2000,-1)
 				}
 			})
 		},
@@ -168,11 +227,85 @@
 </script>
 
 <style scoped>
+	.root{
+		height: 100vh;
+		--bgc: #39b3ff;
+		transition: all 3s;
+		background: linear-gradient(45deg,#9c2d85,#39b3ff);
+	}
+	.funcs{
+		margin: 20rpx;
+		padding: 20rpx;
+		backdrop-filter: blur(30rpx);
+		background-color: rgba(250, 255, 255, 0.2);
+		border-radius: 20rpx;
+	}
+	.speedText{
+		font-size: 50rpx;
+	}
+/* 	/deep/ .uni-slider-thumb{
+		width: 18rpx !important;
+		height: 18rpx !important;
+	} */
+	.boxs{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		align-content: center;
+		color: white;
+	}
+	.box{
+		margin: 30rpx;
+		width: 40%;
+		height: 180rpx;
+		text-align: center;
+		position: relative;
+		font-size: 26rpx;
+		box-shadow:  #7c7c7c 0px 0px 10px 0px;
+		border-top-left-radius: 40rpx;
+		border-bottom-right-radius: 40rpx;
+		background-color: var(--bgc);
+		transition: all 1s;
+	}
+	.box_title{
+		position: absolute; 
+		left: 20rpx; 
+		top: 16;
+	}
+	.video_botton{
+		--bgc: #39b3ff;
+		height: 130rpx;
+		background-color: var(--bgc);
+		position: relative;
+		top: -11rpx;
+		border-bottom-left-radius: 80rpx;
+		border-bottom-right-radius: 80rpx;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		font-size: 26rpx;
+		color: white;
+		transition: all 1s;
+	}
+	.video_botton_item{
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+	}
+	._system_status_bar{
+		height: var(--status-bar-height);
+	}
 .controller {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	background-color: var(--bgc);
+	border-radius: 50rpx;
+	transition: all 1s;
+	position: relative;
+	box-shadow:  #7c7c7c 0px 0px 10px 0px;
 }
 .controller .lr {
 	display: flex;
@@ -192,7 +325,6 @@
 
 video{
 	width: 100%;
-	z-index: -1;
 }
 .popup{
 	z-index: 999;
@@ -208,5 +340,11 @@ video{
 }
 .direction {
 	width: 380rpx;
+	
+	}
+	.switch{
+		position: absolute;
+		right: 40rpx;
+		top: 40rpx;
 	}
 </style>

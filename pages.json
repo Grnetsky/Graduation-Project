@@ -22,7 +22,12 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "控制界面",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor":"#39b3ff",
+				"navigationBarTextStyle":"white",
+				"navigationStyle": "custom"
+				
+				
             }
             
         }

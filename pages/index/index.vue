@@ -7,7 +7,7 @@
 									<h2 class="title">设备编号：{{curCar.id}} </h2>
 									<view class="bottonList">
 										<view :class="['bottonItem',curCar.power<=20?'wave':'']">
-											<h1 class="data">20</h1>
+											<h1 class="data">{{curCar.power}}</h1>
 											<text class="dataName">剩余电量</text>
 										</view>
 										<view class="bottonItem">
@@ -45,10 +45,10 @@
 						<view class="popup-content2" :class="{ 'popup-height': type === 'left' || type === 'right' }">
 							<h3>请选择巡检线路</h3>
 							<view class="contain">
-								<view class="lx">
+								<view class="lx" @click="toControllPage(1,curCar.id,'auto')">
 									路线1
 								</view>
-								<view class="lx">
+								<view class="lx"  @click="toControllPage(2,curCar.id,'auto')">
 									路线2
 								</view>
 							</view>
@@ -62,7 +62,7 @@
 		</view>
 		<h1 class="title">你好！{{username}}</h1>
 		<h2 class="title">请选择控制设备({{carList.length}}台在线)</h2>
-		<uni-card v-for="item,index in carList" :key="index" @click="toControllPage(index,item.id,item.status)">
+		<uni-card v-for="item,index in carList" :key="index" @click="popUpAndGetCar(index)">
 			设备编号：{{item.id}}
 			<view :class="['battery',item.power<=20?'bounce':'']">
 				<view id="top"></view>
@@ -107,8 +107,15 @@
 						content:"当前设备电量过低，确定巡检吗？",
 						success: (res)=> {
 								if (res.confirm) {
-									this.$refs.popup2.open("center")
-									this.$refs.popup.close()
+									if(!mode){
+										// 进入手动控制页
+										this.toControllPage(0,this.curCar.id,'manual')
+										toControllPage
+									}else {
+									// 自动控制
+										this.$refs.popup2.open("center")
+										this.$refs.popup.close()
+									}
 									return 
 								} else if (res.cancel) {
 									console.log('用户点击取消');
@@ -118,10 +125,21 @@
 					})
 					
 				}else{
-					this.$refs.popup2.open("center")
-					this.$refs.popup.close()
 					
+					if(!mode){
+						// 进入手动控制页
+						this.toControllPage(0,this.curCar.id,'manual')
+						toControllPage
+					}else {
+					// 自动控制
+						this.$refs.popup2.open("center")
+						this.$refs.popup.close()
+					}
 				}
+			},
+			popUpAndGetCar(index){
+					this.curCar = this.carList[index]
+					this.popup("bottom")
 			},
 			popup(type) {
 				this.type = type
@@ -140,27 +158,21 @@
 			},
 			async getCarList(){
 				//do somethings
-				// this.carList = await this.Myrequest('carList/') 
+				this.carList = await this.Myrequest('carList/') 
 			},
-			toControllPage(index,id,status){
-				this.curCar = this.carList[index]
-				this.popup('bottom')
-				return
-				if(status){
-					uni.showLoading({
-						title:"握手转发中...",
-						mask:true
+			toControllPage(lxid,carid,mode){
+				this.$refs.popup2.close()
+				uni.showLoading({
+					title:"握手转发中...",
+					mask:true
+				})
+				setTimeout(()=>{
+					uni.hideLoading()
+					uni.navigateTo({
+						url:`/pages/control/control?id=${carid}&lxid=${lxid}&mode=${mode}`,
+						animationType:"slide-in-bottom"
 					})
-					setTimeout(()=>{
-						uni.hideLoading()
-						uni.navigateTo({
-							url:`/pages/control/control?id=${id}`
-						})
-					},1000)
-				}else {
-					uni.showToast({title:"设备正忙碌噢...",duration:2000,icon:"error"})
-					return 
-				}
+				},1000)
 
 			}
 		}
