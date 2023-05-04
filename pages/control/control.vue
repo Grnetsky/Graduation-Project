@@ -4,6 +4,11 @@
 			<!-- <view class="_system_status_bar"></view> -->
 			<!-- 提示信息弹窗 -->
 			<!-- <h1 class="title">设备编号{{carInfo.id}}</h1> -->
+				<view>
+					<uni-popup ref="popup2" type="center"><view class="popup2">
+						异常上报
+					</view></uni-popup>
+				</view>
 			<uni-nav-bar :left-text="'编号：'+carInfo.id" color="white" statusBar :background-color="!mode?manualColor:autoColor" :title="(mode?'自动':'手动')+'巡检中'"></uni-nav-bar>
 
 			<uni-popup class="popup" ref="message" type="message">
@@ -19,7 +24,7 @@
 				剩余电量
 			</view>
 			<view class="video_botton_item">
-				<h2>30cm/s</h2>
+				<h2>{{speed}}cm/s</h2>
 				
 				前进速度
 			</view>
@@ -67,18 +72,26 @@
 				 <view class="speedText">
 				 	{{speed}}
 				 </view>
-							<view style="touch-action: none;">
+							<view style="touch-action: none;position: relative;top:10px">
 								<slider block-size="16" :value="speed" @change="sliderChange"/>
 							</view>
 				</view>
 				<view class="box" :style="{'--bgc':mode?autoColor:manualColor}">
-				
-				</view>
-				<view class="box" :style="{'--bgc':mode?autoColor:manualColor}">
+					<view class="box_container" @click="uploadInfo">
+						<text class="box_title">巡检上报</text>
+						<uni-icons type="upload"  color="white" size="40"></uni-icons>
+						
+					</view>
 					
 				</view>
 				<view class="box" :style="{'--bgc':mode?autoColor:manualColor}">
-					
+					<view class="box_container" @click="toStartPosition">
+						<text class="box_title" >返回起点</text>
+						<uni-icons type="refreshempty"  color="white" size="40"></uni-icons>
+					</view>				
+				</view>
+				<view class="box" :style="{'--bgc':mode?autoColor:manualColor}">
+					<text class="box_title">其他功能</text>
 				</view>
 			</view>
 		</view>
@@ -96,13 +109,39 @@
 				msgType:"",
 				messageText:"",
 				carInfo:{},
-				autoColor:'#12c155',
-				manualColor:"#39b3ff",
-				speed:0
+				autoColor:'rgba(255,255,255,.2)',
+				manualColor:"rgba(0,0,0,.2)",
+				speed:0,
+				user:{id:'1'}
 				
 			}
 		},
 		methods: {
+			uploadInfo(){
+				this.$refs.popup2.open()
+			},
+			// 回到起点位置
+			toStartPosition(){
+				uni.showModal({
+					title:"回到起点",
+					content:"确定回到起点吗",
+					success(confirm) {
+						if(confirm.confirm){
+							uni.showLoading({
+								title:"正在规划路线"
+							})
+							setTimeout(()=>{
+								uni.hideLoading()
+								uni.showToast({
+									title:"返回成功"
+								})
+							},1000)
+
+						}
+					}
+				})
+
+			},
 			// 速度修改
 			sliderChange(e){
 				this.speed = e.detail.value
@@ -166,9 +205,9 @@
 			this.mode = data.mode=="auto"?true:false
 			this.carInfo = data
 			// 连接websocket服务
-			
+			let self = this
 			this.socketTsk = uni.connectSocket({
-				url:`ws://192.168.43.127:8008/room/${data.id}/dev`,
+				url:`ws://192.168.43.127:8090/room/${data.id}/dev/${self.user.id}`,
 				header: {
 						'content-type': 'application/json'
 					},
@@ -231,7 +270,13 @@
 		height: 100vh;
 		--bgc: #39b3ff;
 		transition: all 3s;
-		background: linear-gradient(45deg,#9c2d85,#39b3ff);
+		background: linear-gradient(110.6deg, rgb(179, 157, 219) 7%, rgb(150, 159, 222) 47.7%, rgb(24, 255, 255) 100.6%);
+	}
+	.popup2{
+		width: 300rpx;
+		height: 400rpx;
+		background-color: white;
+		border-radius: 20rpx;
 	}
 	.funcs{
 		margin: 20rpx;
@@ -242,6 +287,8 @@
 	}
 	.speedText{
 		font-size: 50rpx;
+		position: relative;
+		top: 40rpx;
 	}
 /* 	/deep/ .uni-slider-thumb{
 		width: 18rpx !important;
@@ -264,13 +311,14 @@
 		box-shadow:  #7c7c7c 0px 0px 10px 0px;
 		border-top-left-radius: 40rpx;
 		border-bottom-right-radius: 40rpx;
+		/* border-radius: 20rpx; */
 		background-color: var(--bgc);
 		transition: all 1s;
 	}
 	.box_title{
 		position: absolute; 
 		left: 20rpx; 
-		top: 16;
+		top: 16rpx;
 	}
 	.video_botton{
 		--bgc: #39b3ff;
@@ -323,6 +371,13 @@
 		align-items: center;
 }
 
+.box_container{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 video{
 	width: 100%;
 }

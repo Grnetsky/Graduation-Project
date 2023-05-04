@@ -1443,7 +1443,7 @@ var render = function () {
                               staticClass: _vm._$g(10, "sc"),
                               attrs: { _i: 10 },
                             },
-                            [_vm._v("20")]
+                            [_vm._v(_vm._$g(10, "t0-0"))]
                           ),
                           _c(
                             "v-uni-text",
@@ -1466,7 +1466,7 @@ var render = function () {
                               staticClass: _vm._$g(13, "sc"),
                               attrs: { _i: 13 },
                             },
-                            [_vm._v("20")]
+                            [_vm._v("10")]
                           ),
                           _c(
                             "v-uni-text",
@@ -1474,7 +1474,7 @@ var render = function () {
                               staticClass: _vm._$g(14, "sc"),
                               attrs: { _i: 14 },
                             },
-                            [_vm._v("事故率")]
+                            [_vm._v("异常总数")]
                           ),
                         ],
                         1
@@ -1489,7 +1489,7 @@ var render = function () {
                               staticClass: _vm._$g(16, "sc"),
                               attrs: { _i: 16 },
                             },
-                            [_vm._v("20")]
+                            [_vm._v("G2")]
                           ),
                           _c(
                             "v-uni-text",
@@ -2639,11 +2639,11 @@ __webpack_require__.r(__webpack_exports__);
 var components
 try {
   components = {
-    uniNavBar:
-      __webpack_require__(/*! @/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue */ 56)
-        .default,
     uniPopup:
       __webpack_require__(/*! @/uni_modules/uni-popup/components/uni-popup/uni-popup.vue */ 27)
+        .default,
+    uniNavBar:
+      __webpack_require__(/*! @/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue */ 56)
         .default,
     uniPopupMessage:
       __webpack_require__(/*! @/uni_modules/uni-popup/components/uni-popup-message/uni-popup-message.vue */ 73)
@@ -2681,11 +2681,30 @@ var render = function () {
         "uni-view",
         { attrs: { _i: 1 } },
         [
-          _c("uni-nav-bar", { attrs: { _i: 2 } }),
+          _c(
+            "uni-view",
+            { attrs: { _i: 2 } },
+            [
+              _c(
+                "uni-popup",
+                { ref: "popup2", attrs: { _i: 3 } },
+                [
+                  _c(
+                    "uni-view",
+                    { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } },
+                    [_vm._v("异常上报")]
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _c("uni-nav-bar", { attrs: { _i: 5 } }),
           _c(
             "uni-popup",
-            { ref: "message", staticClass: _vm._$g(3, "sc"), attrs: { _i: 3 } },
-            [_c("uni-popup-message", { attrs: { _i: 4 } })],
+            { ref: "message", staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
+            [_c("uni-popup-message", { attrs: { _i: 7 } })],
             1
           ),
         ],
@@ -2699,49 +2718,51 @@ var render = function () {
           src: "",
           title: "实时画面",
           "is-live": true,
-          _i: 5,
+          _i: 8,
         },
       }),
       _c(
         "uni-view",
         {
-          staticClass: _vm._$g(6, "sc"),
-          style: _vm._$g(6, "s"),
-          attrs: { _i: 6 },
+          staticClass: _vm._$g(9, "sc"),
+          style: _vm._$g(9, "s"),
+          attrs: { _i: 9 },
         },
         [
           _c(
             "uni-view",
-            { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
+            { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
             [
-              _c("h2", { attrs: { _i: 8 } }, [_vm._v("86")]),
+              _c("h2", { attrs: { _i: 11 } }, [_vm._v("86")]),
               _vm._v("剩余电量"),
             ],
             1
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
+            { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
             [
-              _c("h2", { attrs: { _i: 10 } }, [_vm._v("30cm/s")]),
+              _c("h2", { attrs: { _i: 13 } }, [
+                _vm._v(_vm._$g(13, "t0-0") + "cm/s"),
+              ]),
               _vm._v("前进速度"),
             ],
             1
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
+            { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
             [
-              _c("h2", { attrs: { _i: 12 } }, [_vm._v("6")]),
+              _c("h2", { attrs: { _i: 15 } }, [_vm._v("6")]),
               _vm._v("标记点数"),
             ],
             1
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
+            { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
             [
-              _c("h2", { attrs: { _i: 14 } }, [_vm._v("G2")]),
+              _c("h2", { attrs: { _i: 17 } }, [_vm._v("G2")]),
               _vm._v("当前位置"),
             ],
             1
@@ -2751,44 +2772,20 @@ var render = function () {
       ),
       _c(
         "uni-view",
-        { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
+        { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
         [
           _c(
             "uni-view",
             {
-              staticClass: _vm._$g(16, "sc"),
-              style: _vm._$g(16, "s"),
-              attrs: { _i: 16 },
+              staticClass: _vm._$g(19, "sc"),
+              style: _vm._$g(19, "s"),
+              attrs: { _i: 19 },
             },
             [
               _c(
                 "uni-view",
-                { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
+                { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
                 [
-                  _c(
-                    "uni-view",
-                    { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
-                    [
-                      _c(
-                        "uni-view",
-                        {
-                          staticClass: _vm._$g(19, "sc"),
-                          attrs: { _i: 19 },
-                          on: {
-                            touchstart: function ($event) {
-                              return _vm.$handleViewEvent($event)
-                            },
-                            touchend: function ($event) {
-                              return _vm.$handleViewEvent($event)
-                            },
-                          },
-                        },
-                        [_c("uni-icons", { attrs: { _i: 20 } })],
-                        1
-                      ),
-                    ],
-                    1
-                  ),
                   _c(
                     "uni-view",
                     { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
@@ -2810,11 +2807,18 @@ var render = function () {
                         [_c("uni-icons", { attrs: { _i: 23 } })],
                         1
                       ),
+                    ],
+                    1
+                  ),
+                  _c(
+                    "uni-view",
+                    { staticClass: _vm._$g(24, "sc"), attrs: { _i: 24 } },
+                    [
                       _c(
                         "uni-view",
                         {
-                          staticClass: _vm._$g(24, "sc"),
-                          attrs: { _i: 24 },
+                          staticClass: _vm._$g(25, "sc"),
+                          attrs: { _i: 25 },
                           on: {
                             touchstart: function ($event) {
                               return _vm.$handleViewEvent($event)
@@ -2824,16 +2828,9 @@ var render = function () {
                             },
                           },
                         },
-                        [_c("uni-icons", { attrs: { _i: 25 } })],
+                        [_c("uni-icons", { attrs: { _i: 26 } })],
                         1
                       ),
-                    ],
-                    1
-                  ),
-                  _c(
-                    "uni-view",
-                    { staticClass: _vm._$g(26, "sc"), attrs: { _i: 26 } },
-                    [
                       _c(
                         "uni-view",
                         {
@@ -2854,12 +2851,36 @@ var render = function () {
                     ],
                     1
                   ),
+                  _c(
+                    "uni-view",
+                    { staticClass: _vm._$g(29, "sc"), attrs: { _i: 29 } },
+                    [
+                      _c(
+                        "uni-view",
+                        {
+                          staticClass: _vm._$g(30, "sc"),
+                          attrs: { _i: 30 },
+                          on: {
+                            touchstart: function ($event) {
+                              return _vm.$handleViewEvent($event)
+                            },
+                            touchend: function ($event) {
+                              return _vm.$handleViewEvent($event)
+                            },
+                          },
+                        },
+                        [_c("uni-icons", { attrs: { _i: 31 } })],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
                 ],
                 1
               ),
               _c("v-uni-switch", {
-                staticClass: _vm._$g(29, "sc"),
-                attrs: { checked: _vm._$g(29, "a-checked"), _i: 29 },
+                staticClass: _vm._$g(32, "sc"),
+                attrs: { checked: _vm._$g(32, "a-checked"), _i: 32 },
                 on: {
                   change: function ($event) {
                     return _vm.$handleViewEvent($event)
@@ -2871,38 +2892,42 @@ var render = function () {
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(30, "sc"), attrs: { _i: 30 } },
+            { staticClass: _vm._$g(33, "sc"), attrs: { _i: 33 } },
             [
               _c(
                 "uni-view",
                 {
-                  staticClass: _vm._$g(31, "sc"),
-                  style: _vm._$g(31, "s"),
-                  attrs: { _i: 31 },
+                  staticClass: _vm._$g(34, "sc"),
+                  style: _vm._$g(34, "s"),
+                  attrs: { _i: 34 },
                 },
                 [
                   _c(
                     "v-uni-text",
-                    { staticClass: _vm._$g(32, "sc"), attrs: { _i: 32 } },
+                    { staticClass: _vm._$g(35, "sc"), attrs: { _i: 35 } },
                     [_vm._v("速度")]
                   ),
                   _c(
                     "uni-view",
-                    { staticClass: _vm._$g(33, "sc"), attrs: { _i: 33 } },
-                    [_vm._v(_vm._$g(33, "t0-0"))]
+                    { staticClass: _vm._$g(36, "sc"), attrs: { _i: 36 } },
+                    [_vm._v(_vm._$g(36, "t0-0"))]
                   ),
                   _c(
                     "uni-view",
                     {
-                      staticStyle: { "touch-action": "none" },
-                      attrs: { _i: 34 },
+                      staticStyle: {
+                        "touch-action": "none",
+                        position: "relative",
+                        top: "10px",
+                      },
+                      attrs: { _i: 37 },
                     },
                     [
                       _c("v-uni-slider", {
                         attrs: {
                           "block-size": "16",
-                          value: _vm._$g(35, "a-value"),
-                          _i: 35,
+                          value: _vm._$g(38, "a-value"),
+                          _i: 38,
                         },
                         on: {
                           change: function ($event) {
@@ -2916,21 +2941,86 @@ var render = function () {
                 ],
                 1
               ),
-              _c("uni-view", {
-                staticClass: _vm._$g(36, "sc"),
-                style: _vm._$g(36, "s"),
-                attrs: { _i: 36 },
-              }),
-              _c("uni-view", {
-                staticClass: _vm._$g(37, "sc"),
-                style: _vm._$g(37, "s"),
-                attrs: { _i: 37 },
-              }),
-              _c("uni-view", {
-                staticClass: _vm._$g(38, "sc"),
-                style: _vm._$g(38, "s"),
-                attrs: { _i: 38 },
-              }),
+              _c(
+                "uni-view",
+                {
+                  staticClass: _vm._$g(39, "sc"),
+                  style: _vm._$g(39, "s"),
+                  attrs: { _i: 39 },
+                },
+                [
+                  _c(
+                    "uni-view",
+                    {
+                      staticClass: _vm._$g(40, "sc"),
+                      attrs: { _i: 40 },
+                      on: {
+                        click: function ($event) {
+                          return _vm.$handleViewEvent($event)
+                        },
+                      },
+                    },
+                    [
+                      _c(
+                        "v-uni-text",
+                        { staticClass: _vm._$g(41, "sc"), attrs: { _i: 41 } },
+                        [_vm._v("巡检上报")]
+                      ),
+                      _c("uni-icons", { attrs: { _i: 42 } }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _c(
+                "uni-view",
+                {
+                  staticClass: _vm._$g(43, "sc"),
+                  style: _vm._$g(43, "s"),
+                  attrs: { _i: 43 },
+                },
+                [
+                  _c(
+                    "uni-view",
+                    {
+                      staticClass: _vm._$g(44, "sc"),
+                      attrs: { _i: 44 },
+                      on: {
+                        click: function ($event) {
+                          return _vm.$handleViewEvent($event)
+                        },
+                      },
+                    },
+                    [
+                      _c(
+                        "v-uni-text",
+                        { staticClass: _vm._$g(45, "sc"), attrs: { _i: 45 } },
+                        [_vm._v("返回起点")]
+                      ),
+                      _c("uni-icons", { attrs: { _i: 46 } }),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _c(
+                "uni-view",
+                {
+                  staticClass: _vm._$g(47, "sc"),
+                  style: _vm._$g(47, "s"),
+                  attrs: { _i: 47 },
+                },
+                [
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(48, "sc"), attrs: { _i: 48 } },
+                    [_vm._v("其他功能")]
+                  ),
+                ],
+                1
+              ),
             ],
             1
           ),
@@ -3850,7 +3940,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 13);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.root[data-v-befc1fdc]{\n\t\theight: 100vh;\n\t\t--bgc: #39b3ff;\n\t\ttransition: all 3s;\n\t\tbackground: linear-gradient(45deg,#9c2d85,#39b3ff);\n}\n.funcs[data-v-befc1fdc]{\n\t\tmargin: 20rpx;\n\t\tpadding: 20rpx;\n\t\t-webkit-backdrop-filter: blur(30rpx);\n\t\t        backdrop-filter: blur(30rpx);\n\t\tbackground-color: rgba(250, 255, 255, 0.2);\n\t\tborder-radius: 20rpx;\n}\n.speedText[data-v-befc1fdc]{\n\t\tfont-size: 50rpx;\n}\n\t/* \t/deep/ .uni-slider-thumb{\n\t\twidth: 18rpx !important;\n\t\theight: 18rpx !important;\n\t} */\n.boxs[data-v-befc1fdc]{\n\t\tdisplay: flex;\n\t\tflex-wrap: wrap;\n\t\tjustify-content: space-around;\n\t\talign-content: center;\n\t\tcolor: white;\n}\n.box[data-v-befc1fdc]{\n\t\tmargin: 30rpx;\n\t\twidth: 40%;\n\t\theight: 180rpx;\n\t\ttext-align: center;\n\t\tposition: relative;\n\t\tfont-size: 26rpx;\n\t\tbox-shadow:  #7c7c7c 0px 0px 10px 0px;\n\t\tborder-top-left-radius: 40rpx;\n\t\tborder-bottom-right-radius: 40rpx;\n\t\tbackground-color: var(--bgc);\n\t\ttransition: all 1s;\n}\n.box_title[data-v-befc1fdc]{\n\t\tposition: absolute; \n\t\tleft: 20rpx; \n\t\ttop: 16;\n}\n.video_botton[data-v-befc1fdc]{\n\t\t--bgc: #39b3ff;\n\t\theight: 130rpx;\n\t\tbackground-color: var(--bgc);\n\t\tposition: relative;\n\t\ttop: -11rpx;\n\t\tborder-bottom-left-radius: 80rpx;\n\t\tborder-bottom-right-radius: 80rpx;\n\t\tdisplay: flex;\n\t\tjustify-content: space-around;\n\t\talign-items: center;\n\t\tfont-size: 26rpx;\n\t\tcolor: white;\n\t\ttransition: all 1s;\n}\n.video_botton_item[data-v-befc1fdc]{\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\tjustify-content: flex-start;\n\t\talign-items: center;\n}\n._system_status_bar[data-v-befc1fdc]{\n\t\theight: var(--status-bar-height);\n}\n.controller[data-v-befc1fdc] {\n\tdisplay: flex;\n\tflex-direction: row;\n\tjustify-content: center;\n\talign-items: center;\n\tbackground-color: var(--bgc);\n\tborder-radius: 50rpx;\n\ttransition: all 1s;\n\tposition: relative;\n\tbox-shadow:  #7c7c7c 0px 0px 10px 0px;\n}\n.controller .lr[data-v-befc1fdc] {\n\tdisplay: flex;\n\tjustify-content: space-around;\n\talign-items: center;\n}\n.bom[data-v-befc1fdc] {\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n}\n.top[data-v-befc1fdc] {\n\tdisplay: flex;\n\t\tjustify-content: center;\n\t\talign-items: center;\n}\nuni-video[data-v-befc1fdc]{\n\twidth: 100%;\n}\n.popup[data-v-befc1fdc]{\n\tz-index: 999;\n}\n.title[data-v-befc1fdc] {\n\tcolor: rgb(224, 150, 0);\n\ttext-indent: 8;\n\tfont-weight: 800;\n\tmargin-left: 40rpx;\n}\n.button[data-v-befc1fdc] {\n\twidth: 100rpx;\n}\n.direction[data-v-befc1fdc] {\n\twidth: 380rpx;\n}\n.switch[data-v-befc1fdc]{\n\t\tposition: absolute;\n\t\tright: 40rpx;\n\t\ttop: 40rpx;\n}\n", ""]);
+exports.push([module.i, "\n.root[data-v-befc1fdc]{\n\t\theight: 100vh;\n\t\t--bgc: #39b3ff;\n\t\ttransition: all 3s;\n\t\tbackground: linear-gradient(110.6deg, rgb(179, 157, 219) 7%, rgb(150, 159, 222) 47.7%, rgb(24, 255, 255) 100.6%);\n}\n.popup2[data-v-befc1fdc]{\n\t\twidth: 300rpx;\n\t\theight: 400rpx;\n\t\tbackground-color: white;\n\t\tborder-radius: 20rpx;\n}\n.funcs[data-v-befc1fdc]{\n\t\tmargin: 20rpx;\n\t\tpadding: 20rpx;\n\t\t-webkit-backdrop-filter: blur(30rpx);\n\t\t        backdrop-filter: blur(30rpx);\n\t\tbackground-color: rgba(250, 255, 255, 0.2);\n\t\tborder-radius: 20rpx;\n}\n.speedText[data-v-befc1fdc]{\n\t\tfont-size: 50rpx;\n\t\tposition: relative;\n\t\ttop: 40rpx;\n}\n\t/* \t/deep/ .uni-slider-thumb{\n\t\twidth: 18rpx !important;\n\t\theight: 18rpx !important;\n\t} */\n.boxs[data-v-befc1fdc]{\n\t\tdisplay: flex;\n\t\tflex-wrap: wrap;\n\t\tjustify-content: space-around;\n\t\talign-content: center;\n\t\tcolor: white;\n}\n.box[data-v-befc1fdc]{\n\t\tmargin: 30rpx;\n\t\twidth: 40%;\n\t\theight: 180rpx;\n\t\ttext-align: center;\n\t\tposition: relative;\n\t\tfont-size: 26rpx;\n\t\tbox-shadow:  #7c7c7c 0px 0px 10px 0px;\n\t\tborder-top-left-radius: 40rpx;\n\t\tborder-bottom-right-radius: 40rpx;\n\t\t/* border-radius: 20rpx; */\n\t\tbackground-color: var(--bgc);\n\t\ttransition: all 1s;\n}\n.box_title[data-v-befc1fdc]{\n\t\tposition: absolute; \n\t\tleft: 20rpx; \n\t\ttop: 16rpx;\n}\n.video_botton[data-v-befc1fdc]{\n\t\t--bgc: #39b3ff;\n\t\theight: 130rpx;\n\t\tbackground-color: var(--bgc);\n\t\tposition: relative;\n\t\ttop: -11rpx;\n\t\tborder-bottom-left-radius: 80rpx;\n\t\tborder-bottom-right-radius: 80rpx;\n\t\tdisplay: flex;\n\t\tjustify-content: space-around;\n\t\talign-items: center;\n\t\tfont-size: 26rpx;\n\t\tcolor: white;\n\t\ttransition: all 1s;\n}\n.video_botton_item[data-v-befc1fdc]{\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\tjustify-content: flex-start;\n\t\talign-items: center;\n}\n._system_status_bar[data-v-befc1fdc]{\n\t\theight: var(--status-bar-height);\n}\n.controller[data-v-befc1fdc] {\n\tdisplay: flex;\n\tflex-direction: row;\n\tjustify-content: center;\n\talign-items: center;\n\tbackground-color: var(--bgc);\n\tborder-radius: 50rpx;\n\ttransition: all 1s;\n\tposition: relative;\n\tbox-shadow:  #7c7c7c 0px 0px 10px 0px;\n}\n.controller .lr[data-v-befc1fdc] {\n\tdisplay: flex;\n\tjustify-content: space-around;\n\talign-items: center;\n}\n.bom[data-v-befc1fdc] {\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n}\n.top[data-v-befc1fdc] {\n\tdisplay: flex;\n\t\tjustify-content: center;\n\t\talign-items: center;\n}\n.box_container[data-v-befc1fdc]{\n\twidth: 100%;\n\theight: 100%;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n}\nuni-video[data-v-befc1fdc]{\n\twidth: 100%;\n}\n.popup[data-v-befc1fdc]{\n\tz-index: 999;\n}\n.title[data-v-befc1fdc] {\n\tcolor: rgb(224, 150, 0);\n\ttext-indent: 8;\n\tfont-weight: 800;\n\tmargin-left: 40rpx;\n}\n.button[data-v-befc1fdc] {\n\twidth: 100rpx;\n}\n.direction[data-v-befc1fdc] {\n\twidth: 380rpx;\n}\n.switch[data-v-befc1fdc]{\n\t\tposition: absolute;\n\t\tright: 40rpx;\n\t\ttop: 40rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

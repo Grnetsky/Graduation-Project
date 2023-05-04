@@ -11,28 +11,28 @@
 											<text class="dataName">剩余电量</text>
 										</view>
 										<view class="bottonItem">
-											<h1 class="data">20</h1>
+											<h1 class="data">{{curCar.num}}</h1>
 											<text class="dataName">巡检次数</text>
 										</view>
 										<view class="bottonItem">
-											<h1 class="data">20</h1>
-											<text class="dataName">事故率</text>
+											<h1 class="data">10</h1>
+											<text class="dataName">异常总数</text>
 										</view>
 										<view class="bottonItem">
-											<h1 class="data">20</h1>
+											<h1 class="data">G2</h1>
 											<text class="dataName">当前位置</text>		
 										</view>
 									</view>
 									
 									<view class="blist">
 										
-										<view class="bl" style="background-color: rgb(168 161 161);" v-if="curCar.status" @click="work(false)">
+										<view class="bl" style="background-color: rgb(168 161 161);" v-if="curCar.status || curCar.user_id == user.id" @click="work(false)">
 											手动巡检
 										</view>
-										<view class="bl" style="background-color: rgb(224, 150, 0);" v-if="curCar.status" @click="work(true)">
+										<view class="bl" style="background-color: rgb(224, 150, 0);" v-if="curCar.status || curCar.user_id == user.id" @click="work(true)">
 											自动巡检
 										</view>
-										<view class="bl" style="background-color: #eee;" v-if="!curCar.status">
+										<view class="bl" style="background-color: #eee;" v-if="!curCar.status && !(curCar.user_id == user.id)">
 											设备已被占用
 										</view>
 									</view>
@@ -85,7 +85,8 @@
 				username:'',	
 				carList:[{id:1,name:"小车1",status:true,power:100},{id:2,name:"小车2",status:false,power:40},{id:3,name:"小车3",status:true,power:20}],
 				type:"bottom",
-				curCar:{}
+				curCar:{},
+				user:{id:'1'}
 				
 			}
 		},
@@ -110,7 +111,6 @@
 									if(!mode){
 										// 进入手动控制页
 										this.toControllPage(0,this.curCar.id,'manual')
-										toControllPage
 									}else {
 									// 自动控制
 										this.$refs.popup2.open("center")
