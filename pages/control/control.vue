@@ -5,9 +5,24 @@
 			<!-- 提示信息弹窗 -->
 			<!-- <h1 class="title">设备编号{{carInfo.id}}</h1> -->
 				<view>
-					<uni-popup ref="popup2" type="center"><view class="popup2">
-						异常上报
-					</view></uni-popup>
+					<uni-popup ref="popup2" type="bottom" background-color="rgba(255,255,255)">
+						<view class="popup2">
+						<uni-forms class="forms" ref="baseForm" :modelValue="baseFormData">
+											<uni-forms-item label="巡检设备" required>
+												<uni-easyinput v-model="baseFormData.equName" placeholder="请输入巡检设备" />
+											</uni-forms-item>
+							
+											<uni-forms-item label="巡检内容">
+												<uni-easyinput type="textarea" v-model="baseFormData.detail" placeholder="请输入巡检内容" />
+											</uni-forms-item>
+											
+																<uni-forms-item label="状态" required>
+																	<uni-data-checkbox v-model="baseFormData.state" :localdata="state" />
+																</uni-forms-item>
+											<button type="primary" @click="submiteForm">提交</button>
+										</uni-forms>
+						</view>
+					</uni-popup>
 				</view>
 			<uni-nav-bar :left-text="'编号：'+carInfo.id" color="white" statusBar :background-color="!mode?manualColor:autoColor" :title="(mode?'自动':'手动')+'巡检中'"></uni-nav-bar>
 
@@ -29,9 +44,9 @@
 				前进速度
 			</view>
 			<view class="video_botton_item">
-				<h2>6</h2>
+				<h2>{{uploadNum}}</h2>
 				
-				标记点数
+				巡检点数
 			</view>
 			<view class="video_botton_item">
 				<h2>G2</h2>
@@ -73,7 +88,7 @@
 				 	{{speed}}
 				 </view>
 							<view style="touch-action: none;position: relative;top:10px">
-								<slider block-size="16" :value="speed" @change="sliderChange"/>
+								<slider block-size="16" :value="speed" @change="speedChange"/>
 							</view>
 				</view>
 				<view class="box" :style="{'--bgc':mode?autoColor:manualColor}">
@@ -104,6 +119,7 @@
 	export default {
 		data() {
 			return {
+				isConnect:false,
 				mode:false,
 				socketTsk:null,
 				msgType:"",
@@ -111,12 +127,58 @@
 				carInfo:{},
 				autoColor:'rgba(255,255,255,.2)',
 				manualColor:"rgba(0,0,0,.2)",
-				speed:0,
-				user:{id:'1'}
-				
+				speed:50,
+				uploadNum:0,
+				user:{id:'1'},
+				baseFormData: {
+					equName:"",
+					detail:"",
+					state:""
+				},
+				state:[
+					{
+						text:"正常",
+						value:1
+					},
+					{
+						text:"异常",
+						value:0,
+					}
+				]	
+			}
+		},
+		watch:{
+			mode(newV,oldV){
+				if(newV){
+					console.log("切换为自动模式");
+					this.socketTsk.send({
+						data:"autoMode"
+					})
+				}else{
+					this.socketTsk.send({
+						data:"manualMode"
+					})
+				}
 			}
 		},
 		methods: {
+			async submiteForm(){
+				console.log("发送表单");
+				let result = await this.Myrequest('uploadLogs/',"POST",{...this.baseFormData,carid:this.carInfo.id,userid:this.user.id})
+				if(result.code == 200){
+					uni.showToast({
+						title:result.message,
+						icon:'success'
+					})
+					this.uploadNum+=1
+					this.$refs.popup2.close()
+				}else{
+					uni.showToast({
+						title:result.message,
+						icon:'error'
+					})
+				}
+			},
 			uploadInfo(){
 				this.$refs.popup2.open()
 			},
@@ -143,8 +205,11 @@
 
 			},
 			// 速度修改
-			sliderChange(e){
+			speedChange(e){
 				this.speed = e.detail.value
+				this.socketTsk.send({
+					data:"设置速度"+e.detail.value
+				})
 			},
 			messageToggle(type,message) {
 				this.msgType = type
@@ -201,7 +266,18 @@
 			}
 		},
 		onLoad(data) {
-			console.log(data);
+			this.user.id = data.userid
+			setTimeout(()=>{
+				console.log("连接检查");
+				if (this.isConnect)return
+				uni.hideLoading()
+				this.messageToggle('error','设备连接失败')
+				setTimeout(uni.navigateBack,2000,-1)
+			},5000)
+			uni.showLoading({
+				title:"正在连接...",
+				mask:true,
+			})
 			this.mode = data.mode=="auto"?true:false
 			this.carInfo = data
 			// 连接websocket服务
@@ -220,7 +296,6 @@
 					},
 				success:()=> {
 					console.log("websocket链接成功")
-					this.messageToggle('success','设备连接成功')
 				}
 			})
 	
@@ -234,10 +309,17 @@
 					})
 					this.socketTsk.close()
 					setTimeout(uni.navigateBack,2000,-1)
+				}else if(data.data == 'ok'){
+					this.isConnect = true
+					setTimeout(()=>{
+						uni.hideLoading()
+						this.messageToggle('success','设备连接成功')
+					},2000,-1)
 				}
 			})
 		},
 		onUnload(){
+			uni.hideLoading()
 			this.socketTsk.close()
 			console.log("socket已经断开");
 		},
@@ -273,10 +355,20 @@
 		background: linear-gradient(110.6deg, rgb(179, 157, 219) 7%, rgb(150, 159, 222) 47.7%, rgb(24, 255, 255) 100.6%);
 	}
 	.popup2{
-		width: 300rpx;
-		height: 400rpx;
-		background-color: white;
+		height: 100%;
+		/* background-color: rgba(255,255,255,.8);
+		backdrop-filter: blur(20rpx);
 		border-radius: 20rpx;
+		box-shadow:  white 0px 0px 10px 0px; */
+	}
+	/depp/ .uni-popup__wrapper{
+		height: 100%;
+		border-top-right-radius: 40rpx;
+		border-top-left-radius: 40rpx;
+	}
+	.forms{
+		height: 100%;
+		padding: 40rpx;
 	}
 	.funcs{
 		margin: 20rpx;

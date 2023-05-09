@@ -83,16 +83,16 @@
 		data() {
 			return {
 				username:'',	
-				carList:[{id:1,name:"小车1",status:true,power:100},{id:2,name:"小车2",status:false,power:40},{id:3,name:"小车3",status:true,power:20}],
+				carList:[{id:1,name:"小车1",status:true,power:100,num:0},{id:2,name:"小车2",status:false,power:40},{id:3,name:"小车3",status:true,power:20}],
 				type:"bottom",
 				curCar:{},
 				user:{id:'1'}
-				
 			}
 		},
 		onLoad(data) {
 			this.getCarList()
 			this.username = data.username
+			this.user.id = data.userid
 		},
 		onShow() {
 			this.getCarList()
@@ -129,7 +129,6 @@
 					if(!mode){
 						// 进入手动控制页
 						this.toControllPage(0,this.curCar.id,'manual')
-						toControllPage
 					}else {
 					// 自动控制
 						this.$refs.popup2.open("center")
@@ -169,7 +168,7 @@
 				setTimeout(()=>{
 					uni.hideLoading()
 					uni.navigateTo({
-						url:`/pages/control/control?id=${carid}&lxid=${lxid}&mode=${mode}`,
+						url:`/pages/control/control?id=${carid}&lxid=${lxid}&mode=${mode}&userid=${this.user.id}`,
 						animationType:"slide-in-bottom"
 					})
 				},1000)

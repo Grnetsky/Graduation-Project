@@ -36,7 +36,6 @@
 				form:{username:'',password:''}
 			}
 		},
-		
 		methods: {
 			toGLY(){
 				uni.navigateTo({
@@ -52,12 +51,21 @@
 						});
 						return
 				} 
-				// this.Myrequest('')
-				uni.navigateTo({
-					url:`/pages/index/index?username=${this.form.username}`,
-					animationType:'fade-in',
-					animationDuration:800
-				})
+				let {code,message,userid} = await this.Myrequest('login/','post',this.form)
+				if(code==200){
+					uni.navigateTo({
+						url:`/pages/index/index?username=${this.form.username}&userid=${userid}`,
+						animationType:'fade-in',
+						animationDuration:800
+					})
+				}else{
+					uni.showToast({
+						title:message,
+						position:"bottom"
+					});
+					return
+				}
+
 			}
 		}
 	}
