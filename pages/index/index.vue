@@ -16,11 +16,11 @@
 										</view>
 										<view class="bottonItem">
 											<h1 class="data">10</h1>
-											<text class="dataName">异常总数</text>
+											<text class="dataName">上报日志</text>
 										</view>
 										<view class="bottonItem">
-											<h1 class="data">G2</h1>
-											<text class="dataName">当前位置</text>		
+											<h1 class="data">{{curCar.status?'空闲':'忙碌'}}</h1>
+											<text class="dataName">当前状态</text>		
 										</view>
 									</view>
 									

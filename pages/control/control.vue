@@ -32,10 +32,10 @@
 		</view>
 		
 		<!-- {{mode? '手动':'自动'}}控制中... -->
-		<video autoplay muted loop src="" title="实时画面" :is-live="true"></video>
+		<video autoplay muted loop poster="/static/IMG.jpg"  src="" title="实时画面" :is-live="true"></video>
 		<view class="video_botton" :style="{'--bgc':mode?autoColor:manualColor}">
 			<view class="video_botton_item">
-				<h2>86</h2>
+				<h2>{{carStatus.power}}</h2>
 				剩余电量
 			</view>
 			<view class="video_botton_item">
@@ -128,6 +128,7 @@
 				autoColor:'rgba(255,255,255,.2)',
 				manualColor:"rgba(0,0,0,.2)",
 				speed:50,
+				carStatus:{power:0},
 				uploadNum:0,
 				user:{id:'1'},
 				baseFormData: {
@@ -315,6 +316,8 @@
 						uni.hideLoading()
 						this.messageToggle('success','设备连接成功')
 					},2000,-1)
+				}else if(data.data.startsWith('car:')){
+						this.carStatus = JSON.parse(data.data.slice(4))
 				}
 			})
 		},

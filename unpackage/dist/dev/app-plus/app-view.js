@@ -1474,7 +1474,7 @@ var render = function () {
                               staticClass: _vm._$g(14, "sc"),
                               attrs: { _i: 14 },
                             },
-                            [_vm._v("异常总数")]
+                            [_vm._v("上报日志")]
                           ),
                         ],
                         1
@@ -1489,7 +1489,7 @@ var render = function () {
                               staticClass: _vm._$g(16, "sc"),
                               attrs: { _i: 16 },
                             },
-                            [_vm._v("G2")]
+                            [_vm._v(_vm._$g(16, "t0-0"))]
                           ),
                           _c(
                             "v-uni-text",
@@ -1497,7 +1497,7 @@ var render = function () {
                               staticClass: _vm._$g(17, "sc"),
                               attrs: { _i: 17 },
                             },
-                            [_vm._v("当前位置")]
+                            [_vm._v("当前状态")]
                           ),
                         ],
                         1
@@ -2801,6 +2801,7 @@ var render = function () {
           autoplay: true,
           muted: true,
           loop: true,
+          poster: "/static/IMG.jpg",
           src: "",
           title: "实时画面",
           "is-live": true,
@@ -2819,7 +2820,7 @@ var render = function () {
             "uni-view",
             { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
             [
-              _c("h2", { attrs: { _i: 19 } }, [_vm._v("86")]),
+              _c("h2", { attrs: { _i: 19 } }, [_vm._v(_vm._$g(19, "t0-0"))]),
               _vm._v("剩余电量"),
             ],
             1
