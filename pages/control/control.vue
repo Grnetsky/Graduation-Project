@@ -32,7 +32,8 @@
 		</view>
 		
 		<!-- {{mode? '手动':'自动'}}控制中... -->
-		<video autoplay muted loop poster="/static/IMG.jpg"  src="" title="实时画面" :is-live="true"></video>
+		<!-- <video autoplay muted loop poster="/static/IMG.jpg"  src="" title="实时画面" :is-live="true"></video> -->
+		<img style="width: 100%;" src="http://192.168.43.86:81/stream" alt="">
 		<view class="video_botton" :style="{'--bgc':mode?autoColor:manualColor}">
 			<view class="video_botton_item">
 				<h2>{{carStatus.power}}</h2>
@@ -273,7 +274,7 @@
 				if (this.isConnect)return
 				uni.hideLoading()
 				this.messageToggle('error','设备连接失败')
-				setTimeout(uni.navigateBack,2000,-1)
+				// setTimeout(uni.navigateBack,2000,-1)
 			},5000)
 			uni.showLoading({
 				title:"正在连接...",

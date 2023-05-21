@@ -2796,17 +2796,9 @@ var render = function () {
         ],
         1
       ),
-      _c("v-uni-video", {
-        attrs: {
-          autoplay: true,
-          muted: true,
-          loop: true,
-          poster: "/static/IMG.jpg",
-          src: "",
-          title: "实时画面",
-          "is-live": true,
-          _i: 16,
-        },
+      _c("img", {
+        staticStyle: { width: "100%" },
+        attrs: { src: "http://192.168.43.86:81/stream", alt: "", _i: 16 },
       }),
       _c(
         "uni-view",
