@@ -274,7 +274,7 @@
 				if (this.isConnect)return
 				uni.hideLoading()
 				this.messageToggle('error','设备连接失败')
-				// setTimeout(uni.navigateBack,2000,-1)
+				setTimeout(uni.navigateBack,2000,-1)
 			},5000)
 			uni.showLoading({
 				title:"正在连接...",
